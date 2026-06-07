@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>С днём рождения! 🎉</title>
-    <!-- credits to the writter "@tommyho" follow him on рџ'‰ https://codepen.io/tommyho -->
     <style>
       body {
         margin: 0;
@@ -222,7 +221,7 @@
   <body>
     <div id="birthday-text">
       <h1>🎉 С ДНЁМ РОЖДЕНИЯ! 🎉</h1>
-      <p>С 21 годиком тебя! ✨</p>
+      <p>💖 Happy birthday 💖</p>
     </div>
     
     <div id="controls-container">
@@ -265,10 +264,8 @@
     <canvas id="c"></canvas>
 
     <script>
-      // Проверка на мобильное устройство
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       
-      // Configuration
       const config = {
           particleCount: isMobile ? 30 : 50,
           speed: isMobile ? 0.5 : 1.2,
@@ -278,13 +275,11 @@
           particleSize: isMobile ? 8 : 12
       };
 
-      // Canvas setup
       const canvas = document.getElementById('c');
       const ctx = canvas.getContext('2d');
       let canvasWidth = canvas.width = window.innerWidth;
       let canvasHeight = canvas.height = window.innerHeight;
 
-      // Animation state
       let trails = [];
       let heartPath = [];
       let mouseX = canvasWidth / 2;
@@ -292,7 +287,6 @@
       let mouseActive = false;
       let animationRunning = false;
 
-      // Initialize heart path points (fixed formula)
       function initHeartPath() {
         heartPath = [];
         const PI2 = 6.28318; // 2*PI approximation
@@ -307,7 +301,6 @@
         }
     }
 
-      // Initialize particles with proper bounds checking
       function initParticles() {
           trails = [];
           if (heartPath.length === 0) initHeartPath();
@@ -318,7 +311,7 @@
               const y = Math.random() * canvasHeight;
 
               for (let k = 0; k < config.particleCount; k++) {
-                  // Color generation
+
                   let hue, saturation = Math.random() * 40 + 60;
                   let brightness = Math.random() * 60 + 20;
                   
@@ -345,7 +338,7 @@
           }
       }
 
-      // Render a single particle
+
       function renderParticle(particle) {
           ctx.fillStyle = particle.color;
           ctx.beginPath();
@@ -353,10 +346,9 @@
           ctx.fill();
       }
 
-      // Main animation loop with robust error handling
-      function animationLoop() {
-          if (!animationRunning) return; // Stop the animation if not running
 
+      function animationLoop() {
+          if (!animationRunning) return; 
           try {
               // Clear with trail effect
               ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
@@ -369,7 +361,7 @@
                   const target = heartPath[leader.targetIndex % heartPath.length];
                   if (!target) return;
 
-                  // Mouse influence
+                 
                   if (mouseActive && config.mouseInfluence > 0) {
                       const dx = mouseX - leader.x;
                       const dy = mouseY - leader.y;
@@ -382,7 +374,7 @@
                       }
                   }
 
-                  // Move toward target
+                  
                   const dx = leader.x - target[0];
                   const dy = leader.y - target[1];
                   const dist = Math.sqrt(dx*dx + dy*dy);
@@ -397,7 +389,7 @@
                       }
                   }
 
-                  // Update physics
+                  
                   leader.velX += -dx/dist * leader.speed * config.speed;
                   leader.velY += -dy/dist * leader.speed * config.speed;
                   leader.x += leader.velX;
@@ -405,7 +397,7 @@
                   leader.velX *= leader.friction;
                   leader.velY *= leader.friction;
 
-                  // Render trail
+                 
                   renderParticle(leader);
                   for (let k = 1; k < trail.length; k++) {
                       trail[k].x -= (trail[k].x - trail[k-1].x) * 0.7;
@@ -420,7 +412,7 @@
           requestAnimationFrame(animationLoop);
       }
 
-      // Control handlers
+      
       function setupControls() {
           const controls = document.getElementById('controls');
           let controlsVisible = true;
@@ -467,7 +459,7 @@
               initParticles();
           });
 
-          // Mouse tracking
+          
           document.addEventListener('mousemove', (e) => {
               mouseX = e.clientX;
               mouseY = e.clientY;
@@ -475,7 +467,7 @@
           });
           document.addEventListener('mouseleave', () => mouseActive = false);
 
-          // Window resize
+          
           window.addEventListener('resize', () => {
               canvasWidth = canvas.width = window.innerWidth;
               canvasHeight = canvas.height = window.innerHeight;
@@ -483,7 +475,7 @@
           });
       }
 
-      // Initialize everything
+      
       function init() {
           const controls = document.getElementById('controls');
           const canvas = document.getElementById('c');
@@ -492,18 +484,18 @@
           canvas.style.display = 'block';
           animationRunning = true;
           setupControls();
-          animationLoop(); // Start the animation loop
+          animationLoop(); 
 
-          // Initialize everything
+         
           initHeartPath();
           initParticles();
       }
 
-      // Start the animation
+      
       if (!isMobile) {
         init();
       } else {
-        // На телефоне запускаем с медленной скоростью
+       
         animationRunning = true;
         initHeartPath();
         initParticles();
